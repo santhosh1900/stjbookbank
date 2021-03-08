@@ -1,7 +1,7 @@
 import React , { useEffect ,useRef , useState} from 'react'
 import "./navbar.css";
 import * as $ from "jquery";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import M from "materialize-css";
 import { useSelector , useDispatch } from "react-redux";
 import cookies from "universal-cookie";
@@ -86,7 +86,7 @@ function Navbar() {
                 <div>
                     <nav className="animate__animated navbar">
                         <div className="nav-wrapper">
-                            <a className="brand-logo">STJ Book Bank</a>
+                            <Link to = "/" className="brand-logo">STJ Book Bank</Link>
                             <form onSubmit={submitSearch} className="navbar__form hide-on-small-only">
                                 <div className="input-field">
                                     <input id="search" type="search" required value={search} onChange={e => setSearch(e.target.value)} />
@@ -96,8 +96,7 @@ function Navbar() {
                             </form>
                             <a href="slide-out" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                             <ul className="right hide-on-med-and-down">
-                                <li><a href="sass.html">{ userdata.Username }</a></li>
-                                <li><a href="badges.html">Purchase History</a></li>
+                                <li><Link to = {`/profile`}>{ userdata.Username }</Link></li>
                                 <li>
                                     <a 
                                         className="dropdown-trigger" 
@@ -180,7 +179,6 @@ function Navbar() {
                                 </div>
                             </form>
                         </li>
-                        <li> <a>  Purchase History </a> </li>
                         <li><div className="divider"></div></li>
                         <li> <a 
                                 className="dropdown-trigger options" 

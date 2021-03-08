@@ -11,18 +11,17 @@ function Slider() {
     },[]);
 
     var MaterialInit = useCallback(() => {
-        setTimeout(() => {
+        // setTimeout(() => {
             M.Carousel.init(Slider_M.current, {
                 dist : 0,
                 fullWidth : true,
                 duration : 2500
             });
-            console.log("dsdsa")
             var instance = M.Carousel.getInstance(Slider_M.current);
             setInterval(()=>{
                 instance.next();
             },3000);
-        },1000);
+        // },1000);
     },[]);
 
     return (

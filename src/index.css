@@ -12,3 +12,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.error{
+  height: 100vh;
+}
+.error h2{
+  font-size: 4rem;
+  text-align: center;
+  margin-top: 50vh;
+}
+
+
+

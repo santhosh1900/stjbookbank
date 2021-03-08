@@ -9,7 +9,6 @@ import M from "materialize-css";
 
 function Home() {
     const dispatch          = useDispatch();
-    const SelectCategory    = useSelector(state => state.book.SelectedCategory);
     const Books             = useSelector(state => state.book.availableBooks);
     const modal             = useRef(null);
     const [ modalName , setModalName ]          = useState("");
@@ -40,8 +39,6 @@ function Home() {
         setModalName(val.Name);
         M.Modal.getInstance(modal.current).open();
     };
-
-
 
     return (
         <div className="homePage">

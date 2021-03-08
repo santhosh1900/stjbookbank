@@ -8,6 +8,8 @@ import Login from "./screens/login";
 import Home from "./screens/Home";
 import Navbar from "./Components/Navbar";
 import Signup from "./screens/signup";
+import UserProfile from "./screens/Userprofile";
+import Error from "./screens/Error";
 
 
 
@@ -28,7 +30,6 @@ const Routing = () => {
       history.push("/login");
     }else{
       dispatch(setCurrentUser(payload.data));
-      history.push("/");
     }
   },[]);
 
@@ -42,6 +43,12 @@ const Routing = () => {
       </Route>
       <Route path="/signup">
         <Signup />
+      </Route>
+      <Route path="/profile">
+        <UserProfile />
+      </Route>
+      <Route path="*">
+        <Error />
       </Route>
     </Switch>
   );
