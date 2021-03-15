@@ -86,7 +86,7 @@ function Userprofile() {
     const OpenPurchaseHistoryModal = useCallback(async ()=>{
         try{
             await M.Modal.getInstance(PurchaseHistoryModal.current).open();
-            UserPurchaseHistory.length <= 0 && await dispatch(RequestFunction("get","getuserpurchasehistory"));
+            await dispatch(RequestFunction("get","getuserpurchasehistory"));
             return setHistoryLoading(false);
         }
         catch(err){
