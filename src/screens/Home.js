@@ -48,7 +48,7 @@ function Home() {
                     <Slider />
                     <div className="row">
                         {
-                            Books.map((val , i )=>(
+                            (Books) && (Books.map((val , i )=>(
                                 <Card 
                                     key         = {i} 
                                     Image       = {val.Image} 
@@ -57,7 +57,7 @@ function Home() {
                                     Author      = {val.Author}
                                     select={() => {openModal(val)}}
                                 />
-                            ))
+                            )))
                         }
                     </div> 
                 </div> )
