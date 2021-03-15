@@ -1,0 +1,32 @@
+.modal-template .cart_holder{
+    text-align: center;   
+}
+.modal-template .cart_holder .material-icons{
+    font-size: 4rem;
+    color: cornflowerblue;
+}
+
+.modal-template .card {
+    min-height: 15rem;
+    width: 100%;
+}
+.modal-template .card .card-content p{
+    margin-bottom: 1rem;
+}
+.modal-template .card .card-title{
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: #31221321;
+    padding: .5rem;
+}
+
+.modal-template .cart_holder{
+    margin-top: 5rem;
+}
+.modal-template .instruction{
+    margin-top: 1rem;
+    display: flex;
+}
+.modal-template .instruction div{
+    margin-left: .5rem;
+}

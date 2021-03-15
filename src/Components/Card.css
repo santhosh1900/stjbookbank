@@ -1,0 +1,16 @@
+.card-temp .card__Image{
+    height: 20rem;
+}
+.card-temp .card .card-action {
+    height: 5rem;
+}
+.card-temp .card .card-content{
+    height: 10rem;
+}
+.card-temp .card .card-title{
+    color: black !important;
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: #f0f0f0;
+    padding: 10px !important;
+}

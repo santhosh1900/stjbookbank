@@ -1,0 +1,25 @@
+.profile{
+    margin-top: 5rem;
+}
+.profile .card-content{
+    min-height: 23rem !important;
+}
+.profile .card-content p , .profile .white-text .card-title{
+    margin-bottom: 1.2rem !important;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.profile .collection-item{
+    margin-bottom: 1rem !important;
+}
+
+.profile .collection-item img{
+    margin-top: 2rem;
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    left: 10px !important;
+}
+
+.profile .modal-footer .close-btn{
+    float: left;
+}
