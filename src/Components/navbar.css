@@ -8,6 +8,13 @@ a{
     cursor: pointer;
 }
 
+.mb-0{
+    margin-bottom: 0 !important;
+}
+.w-100{
+    width: 100%;
+}
+
 nav{
     background: #8e2de2; /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #8e2de2, #4a00e0); /* Chrome 10-25, Safari 5.1-6 */

@@ -25,6 +25,8 @@ function Navbar() {
 
     const [category , setCategory]       = useState("Select Category");
 
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
     const ScrollFunction = () =>{
         window.addEventListener("scroll", function(){
           if(window.scrollY == 0){
@@ -52,7 +54,11 @@ function Navbar() {
 
     const submitSearch = (e) => {
         e.preventDefault();
-        setSearch("");
+        let data = {
+            search
+        };
+        dispatch(RequestFunction("post","searchbooks",data));
+        setFormSubmitted(true);
     }
 
     const SelectCategory = async(category) => {
@@ -77,8 +83,18 @@ function Navbar() {
         M.Sidenav.init(slide__out.current, {})
     };
 
-    const changeFormWidth = () => {
-        $(".navbar__form").toggleClass("width100");
+    const CancelSearchAndGetAllBooks = async () => {
+        try{
+            $(".navbar__form").toggleClass("width100");
+            if(formSubmitted){
+                await dispatch(RequestFunction("get", "getAllBooks"));
+            }
+            setFormSubmitted(false);
+            setSearch("");           
+        }
+        catch(err){
+            return M.toast({html: err , classes:"#c62828 red darken-3"}); 
+        } 
     }
 
     const Non_Admin_Navbar_Buttons = () => {
@@ -86,12 +102,25 @@ function Navbar() {
             return [
                 <li key="1">
                     <form onSubmit={submitSearch} className="slide_form">
-                        <div className="input-field">
-                            <input id="search" type="search" maxLength="30" placeholder="search books" required value={search} onChange={e => setSearch(e.target.value)} />
+                        <div className="input-field mb-0">
+                            <input 
+                                className="mb-0"
+                                id="search" 
+                                type="search" 
+                                maxLength="30" 
+                                placeholder="search books" 
+                                value={search} 
+                                onChange={e => setSearch(e.target.value)} 
+                            />
+                            {(formSubmitted) && (
+                                <a 
+                                    className="btn btn-small red center-align w-100"
+                                    onClick={CancelSearchAndGetAllBooks}> Cancel Search 
+                                </a>
+                            )}
                         </div>
                     </form>
                 </li>,
-                <li key="2"><div className="divider"></div></li>,
                 <li key="3"> 
                     <a 
                         className="dropdown-trigger options" 
@@ -130,9 +159,14 @@ function Navbar() {
                                 !userdata.IsAdmin && (
                                     <form onSubmit={submitSearch} className="navbar__form hide-on-small-only">
                                         <div className="input-field">
-                                            <input id="search" type="search" required value={search} onChange={e => setSearch(e.target.value)} />
-                                            <label className="label-icon" htmlFor="search" onClick={changeFormWidth}><i className="material-icons">search</i></label>
-                                            <i className="material-icons" onClick={changeFormWidth}>close</i>
+                                            <input id="search" type="search" value={search} onChange={e => setSearch(e.target.value)} />
+                                            <label 
+                                                className="label-icon"
+                                                onClick={() => $(".navbar__form").addClass("width100")}
+                                                htmlFor="search">
+                                                    <i className="material-icons">search</i>
+                                            </label>
+                                            <i className="material-icons" onClick={CancelSearchAndGetAllBooks}>close</i>
                                         </div>
                                     </form>
                                 )

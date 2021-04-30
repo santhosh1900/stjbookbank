@@ -63,10 +63,6 @@ const Routing = () => {
 
 
 function App() {
-  
-
-
-
   return (
     <BrowserRouter>
       <Navbar />

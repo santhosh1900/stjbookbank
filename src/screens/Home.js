@@ -3,6 +3,7 @@ import "./home.css";
 import Slider from "../Components/Slider";
 import Card from "../Components/Card";
 import { RequestFunction } from "../store/action";
+import { useHistory } from "react-router-dom";
 import { useDispatch , useSelector } from "react-redux";
 import Spinner from "../Components/Spinner";
 import M from "materialize-css";
@@ -10,16 +11,20 @@ import ModalTag from "../Components/Modal";
 
 function Home() {
     const dispatch                              = useDispatch();
+    const history                               = useHistory();
     const Books                                 = useSelector(state => state.book.availableBooks);
     const UserAddress                           = useSelector(state => state.auth.address);
+    const UserData                              = useSelector(state => state.auth.userData);
     const modal                                 = useRef(null);
     const [ modalItem , setModalItem ]          = useState("");
     const [ billingSection , setBillingSection ]  = useState(false);
     const [ error , setError ]                    = useState("");
 
-
     useEffect(async () => {
         try{
+            if(UserData && UserData.IsAdmin){
+                await history.push("/admin");
+            }
             if(Books.length <= 0){
                 setTimeout(async () => {
                     try{
@@ -47,8 +52,8 @@ function Home() {
 
     const Addtocart = async (modalItem) => {
         try{
-            if(!UserAddress && !error){
-                await dispatch(RequestFunction("get" , "useraddress")); 
+            if(!error){
+                await dispatch(RequestFunction("get" , "useraddress"));
             }
             await setBillingSection(true);
         }catch(err){
@@ -72,10 +77,16 @@ function Home() {
 
     return (
         <div className="homePage">
-            {   (Books.length <=0) ?
+            <Slider />
+            {
+                (Books == "NO BOOKS FOUND PLEASE ENTER CORRECT BOOK NAME") ?
+                <div>
+                    <h4 style={{textAlign : "center"}}> { Books }  </h4>
+                </div>
+                :
+                (Books.length <=0) ?
                 ( <Spinner /> )
                 :( <div>
-                    <Slider />
                     <div className="row">
                         {
                             (Books) && (Books.map((val , i )=>(
@@ -96,11 +107,11 @@ function Home() {
 
             <div id="modal1" className="modal modal-fixed-footer" ref={modal}>
                 <ModalTag 
-                    modalItem = {modalItem} 
-                    Addtocart={Addtocart} 
-                    billingSection={billingSection} 
-                    UserAddress = {UserAddress}
-                    orderTheBook = {orderTheBook}
+                    modalItem        = {modalItem} 
+                    Addtocart        = {Addtocart} 
+                    billingSection   = {billingSection} 
+                    UserAddress      = {UserAddress}
+                    orderTheBook     = {orderTheBook}
                 />
             </div>
         </div>
