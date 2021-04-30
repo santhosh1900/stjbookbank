@@ -85,6 +85,7 @@ function Userprofile() {
 
     const OpenPurchaseHistoryModal = useCallback(async ()=>{
         try{
+            await setHistoryLoading(true);
             await M.Modal.getInstance(PurchaseHistoryModal.current).open();
             await dispatch(RequestFunction("get","getuserpurchasehistory"));
             return setHistoryLoading(false);
@@ -94,6 +95,18 @@ function Userprofile() {
             return M.toast({html: err.message , classes:"#c62828 red darken-3"});
         }
     },[ UserPurchaseHistory ]);
+
+
+    const BookReturnStatus = (status) => {
+        if(status == "NOT_RETURNED") return <span style={{color : "red"}}> Not Returned </span>;
+        else if (status == "REQUEST_RETURN") return <span style={{color : "orange"}}> Request Return </span>;
+        else return <span style={{color : "green"}}> Book Returned </span>
+    }
+
+    const RequestBookReturn = async (data) =>{
+        await dispatch(RequestFunction("post" , "requestbookreturn", data));
+    }
+
 
     return (
         <div className="profile">
@@ -198,16 +211,15 @@ function Userprofile() {
                                                                 <br />
                                                                 <span> Return By :  {TimeFormat(val.ReturnDate)} </span>
                                                                 <br />
-                                                                <span> Book Status : { val.Status=="NOT_RETURNED" ? 
-                                                                    <span style={{color : "red"}}> Not Returned </span> 
-                                                                    :
-                                                                    <span style={{color : "green"}}> Returned </span> } 
+                                                                <span> Book Status : { BookReturnStatus(val.Status) } 
                                                                 </span>
                                                             </p>
                                                             { ( val.Status ==="NOT_RETURNED" ) && (
                                                                 <div>
                                                                     <br />
-                                                                    <a className="btn red waves-effect waves-white">
+                                                                    <a className="btn red waves-effect waves-white"
+                                                                        onClick={() => RequestBookReturn(val)}
+                                                                    >
                                                                         Return The Book
                                                                     </a> 
                                                                 </div> )

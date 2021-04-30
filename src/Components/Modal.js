@@ -36,7 +36,7 @@ function Modal({ modalItem , Addtocart , billingSection , UserAddress , orderThe
                             </div>
                             {UserAddress ? (
                                 <div>
-                                    { !UserAddress.UserId.CurrentBook ? (
+                                    { UserAddress.UserId.CurrentBookIsReturned ? (
                                     <div>
                                         <a className="btn waves-effect waves-teal" onClick={() => orderTheBook(modalItem)}> Order The Book </a>
                                         <div className="instruction">

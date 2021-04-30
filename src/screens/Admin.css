@@ -1,0 +1,31 @@
+.Admin{
+    margin-top: 6rem;
+    min-height: 100vh;
+}
+.Admin .set_as_receive{
+    position: absolute;
+    right: 1rem;
+    top: 5rem;
+}
+.Admin .collection-item{
+    min-height: 10rem !important;
+}
+.Admin .circle{
+    top: 2rem;
+    width: 4rem !important;
+    height: 4rem !important;
+    left: 5px !important;
+}
+.Admin .title{
+    width: 80%;
+    word-wrap: wrap;
+}
+.Admin .heading{
+    width: 70%;
+    margin-bottom: .5rem;
+}
+.Admin .status{
+    font-size: 1rem;
+    letter-spacing: .5px;
+    font-weight: 500;
+}

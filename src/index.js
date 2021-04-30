@@ -8,12 +8,14 @@ import reportWebVitals from './reportWebVitals';
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import authReducer from "./store/authReducer";
 import bookReducer from "./store/bookReducer";
+import adminReducer from "./store/adminReducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   book  : bookReducer,
-  auth  : authReducer
+  auth  : authReducer,
+  admin : adminReducer
 });
 
 const store = createStore(

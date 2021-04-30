@@ -81,6 +81,44 @@ function Navbar() {
         $(".navbar__form").toggleClass("width100");
     }
 
+    const Non_Admin_Navbar_Buttons = () => {
+        if(!userdata.IsAdmin){
+            return [
+                <li key="1">
+                    <form onSubmit={submitSearch} className="slide_form">
+                        <div className="input-field">
+                            <input id="search" type="search" maxLength="30" placeholder="search books" required value={search} onChange={e => setSearch(e.target.value)} />
+                        </div>
+                    </form>
+                </li>,
+                <li key="2"><div className="divider"></div></li>,
+                <li key="3"> 
+                    <a 
+                        className="dropdown-trigger options" 
+                        href="dropdown2" 
+                        data-target="dropdown2">
+                            Notification
+                        <i className="material-icons right">arrow_drop_down</i>
+                    </a> 
+                </li>,
+                <li key="4"><div className="divider"></div></li>,
+                <li key="5">
+                    <a 
+                        className="dropdown-trigger options" 
+                        id="drop"
+                        href="Categorydropdown2" 
+                        data-target="Categorydropdown2">
+                            { category }
+                        <i className="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>,
+                <li key="6"><div className="divider"></div></li>
+            ]
+        }else{
+            return [];
+        }
+    }
+
     return (
         <div>
             { userdata && (
@@ -88,36 +126,49 @@ function Navbar() {
                     <nav className="animate__animated navbar">
                         <div className="nav-wrapper">
                             <Link to = "/" className="brand-logo">STJ Book Bank</Link>
-                            <form onSubmit={submitSearch} className="navbar__form hide-on-small-only">
-                                <div className="input-field">
-                                    <input id="search" type="search" required value={search} onChange={e => setSearch(e.target.value)} />
-                                    <label className="label-icon" htmlFor="search" onClick={changeFormWidth}><i className="material-icons">search</i></label>
-                                    <i className="material-icons" onClick={changeFormWidth}>close</i>
-                                </div>
-                            </form>
+                            {
+                                !userdata.IsAdmin && (
+                                    <form onSubmit={submitSearch} className="navbar__form hide-on-small-only">
+                                        <div className="input-field">
+                                            <input id="search" type="search" required value={search} onChange={e => setSearch(e.target.value)} />
+                                            <label className="label-icon" htmlFor="search" onClick={changeFormWidth}><i className="material-icons">search</i></label>
+                                            <i className="material-icons" onClick={changeFormWidth}>close</i>
+                                        </div>
+                                    </form>
+                                )
+                            }
+                            
                             <a href="slide-out" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                             <ul className="right hide-on-med-and-down">
                                 <li><Link to = {`/profile`}>{ userdata.Username }</Link></li>
-                                <li>
-                                    <a 
-                                        className="dropdown-trigger" 
-                                        id="drop"
-                                        href="dropdown1" 
-                                        data-target="dropdown1">
-                                            Notification
-                                        <i className="material-icons right">arrow_drop_down</i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a 
-                                        className="dropdown-trigger" 
-                                        id="drop"
-                                        href="Categorydropdown1" 
-                                        data-target="Categorydropdown1">
-                                            { category }
-                                        <i className="material-icons right">arrow_drop_down</i>
-                                    </a>
-                                </li>
+                                {
+                                    !userdata.IsAdmin && (
+                                        <li>
+                                            <a 
+                                                className="dropdown-trigger" 
+                                                id="drop"
+                                                href="dropdown1" 
+                                                data-target="dropdown1">
+                                                    Notification
+                                                <i className="material-icons right">arrow_drop_down</i>
+                                            </a>
+                                        </li>
+                                    )
+                                }
+                                {
+                                    !userdata.IsAdmin && (
+                                        <li>
+                                            <a 
+                                                className="dropdown-trigger" 
+                                                id="drop"
+                                                href="Categorydropdown1" 
+                                                data-target="Categorydropdown1">
+                                                    { category }
+                                                <i className="material-icons right">arrow_drop_down</i>
+                                            </a>
+                                        </li>
+                                    )
+                                }
                                 <li><a onClick={logoutUser}> Logout </a></li>
                             </ul>
                         </div>
@@ -161,7 +212,8 @@ function Navbar() {
                         <li className="divider"></li>
                         <li><a>three</a></li>
                     </ul>
-                    
+
+
                     <ul id="slide-out" className="sidenav" ref={slide__out}>
                         <li>
                             <div className="user-view">
@@ -173,34 +225,9 @@ function Navbar() {
                                 <a href="#email"><span className="white-text email">{userdata.Email}</span></a>
                             </div>
                         </li>
-                        <li>
-                            <form onSubmit={submitSearch} className="slide_form">
-                                <div className="input-field">
-                                    <input id="search" type="search" maxLength="30" placeholder="search books" required value={search} onChange={e => setSearch(e.target.value)} />
-                                </div>
-                            </form>
-                        </li>
-                        <li><div className="divider"></div></li>
-                        <li> <a 
-                                className="dropdown-trigger options" 
-                                href="dropdown2" 
-                                data-target="dropdown2">
-                                    Notification
-                                <i className="material-icons right">arrow_drop_down</i>
-                            </a> 
-                        </li>
-                        <li><div className="divider"></div></li>
-                        <li>
-                            <a 
-                                className="dropdown-trigger options" 
-                                id="drop"
-                                href="Categorydropdown2" 
-                                data-target="Categorydropdown2">
-                                    { category }
-                                <i className="material-icons right">arrow_drop_down</i>
-                            </a>
-                        </li>
-                        <li><div className="divider"></div></li>
+
+                        { Non_Admin_Navbar_Buttons() }
+                        
                         <li> <a className='options' onClick={logoutUser}>  Logout </a> </li>
                     </ul>
                 </div> )

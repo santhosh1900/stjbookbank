@@ -18,6 +18,12 @@ export const UPDATE_ONE_BOOK  = "UPDATE_ONE_BOOK";
 
 
 
+// ==============================admin====================
+export const ADD_RETURN_REQUESTED        = "ADD_RETURN_REQUESTED";
+export const UPDATE_ONE_RETURN_REQUEST   = "UPDATE_ONE_RETURN_REQUEST";
+
+
+
 
 
 export function setCurrentUser(user) {

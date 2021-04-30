@@ -10,6 +10,7 @@ import Navbar from "./Components/Navbar";
 import Signup from "./screens/signup";
 import UserProfile from "./screens/Userprofile";
 import Error from "./screens/Error";
+import Admin from "./screens/Admin";
 
 
 
@@ -17,7 +18,7 @@ const Routing = () => {
   const history   = useHistory();
   const Cookie    = new cookies();
   const dispatch  = useDispatch();
-  useEffect(()=>{
+  useEffect(async ()=>{
     const token       = localStorage.getItem("token");
     let payload;
     if(token){
@@ -25,11 +26,14 @@ const Routing = () => {
       payload         = JSON.parse(window.atob(payload));
     }
     if(!payload){
-      localStorage.clear();
-      Cookie.remove("token");
-      history.push("/login");
+      await localStorage.clear();
+      await Cookie.remove("token");
+      await history.push("/login");
     }else{
-      dispatch(setCurrentUser(payload.data));
+      await dispatch(setCurrentUser(payload.data));
+      if(payload.data.IsAdmin){
+        history.push("/admin");
+      }
     }
   },[]);
 
@@ -47,6 +51,9 @@ const Routing = () => {
       <Route path="/profile">
         <UserProfile />
       </Route>
+      <Route path="/admin">
+        <Admin />
+      </Route>
       <Route path="*">
         <Error />
       </Route>
@@ -56,6 +63,10 @@ const Routing = () => {
 
 
 function App() {
+  
+
+
+
   return (
     <BrowserRouter>
       <Navbar />
