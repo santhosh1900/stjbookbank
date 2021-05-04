@@ -200,20 +200,38 @@ function Userprofile() {
                                 (
                                     <div className="row">
                                         <div className="col s12">
-                                            <ul className="collection">
+                                            <ul className="collection" style={{background : "#fff"}}>
                                                 {
                                                     (UserPurchaseHistory) && (UserPurchaseHistory.map((val,i) => (
                                                         <li className="collection-item avatar" key={i}>
                                                             <img src={val.BookId.Image} alt="" className="circle" />
                                                             <span className="title"> Title : {val.BookId.Name} </span>
-                                                            <p> 
-                                                                <span> Ordered Date : {TimeFormat(val.OrderedDate)} </span>
-                                                                <br />
-                                                                <span> Return By :  {TimeFormat(val.ReturnDate)} </span>
-                                                                <br />
-                                                                <span> Book Status : { BookReturnStatus(val.Status) } 
-                                                                </span>
-                                                            </p>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td> Ordered Date </td>
+                                                                        <td>:</td>
+                                                                        <td> {TimeFormat(val.OrderedDate)} </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Return By </td>
+                                                                        <td>:</td>
+                                                                        <td> {TimeFormat(val.ReturnDate)} </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Book Status </td>
+                                                                        <td>:</td>
+                                                                        <td> {BookReturnStatus(val.Status)} </td>
+                                                                    </tr>
+                                                                    {val.ReturnedOn && 
+                                                                        <tr>
+                                                                            <td> Book Return Date </td>
+                                                                            <td>:</td>
+                                                                            <td> {TimeFormat(val.ReturnedOn)} </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
                                                             { ( val.Status ==="NOT_RETURNED" ) && (
                                                                 <div>
                                                                     <br />

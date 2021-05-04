@@ -9,20 +9,23 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import authReducer from "./store/authReducer";
 import bookReducer from "./store/bookReducer";
 import adminReducer from "./store/adminReducer";
+import notificationReducer from "./store/notificationReducer";
+
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
-  book  : bookReducer,
-  auth  : authReducer,
-  admin : adminReducer
+  book    : bookReducer,
+  auth    : authReducer,
+  admin   : adminReducer,
+  notification : notificationReducer
 });
 
 const store = createStore(
   rootReducer, 
   compose(
     applyMiddleware(thunk),
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 

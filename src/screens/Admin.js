@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { RequestFunction } from "../store/action";
 import M from "materialize-css";
+import { SocketSendBookReceived } from "../store/Socket";
 
 function Admin() {
     const userdata      = useSelector(state => state.auth.userData);
@@ -22,13 +23,25 @@ function Admin() {
         return d.toDateString()
     }
 
-    const Mark_As_Received = async(id, index) =>{
+    const Mark_As_Received = async(id, index, reqInfo) =>{
         try{
             var data = {
                 id,
                 index
             }
             await dispatch(RequestFunction("put", "markasreceived", data));
+            let currentDate = String(new Date());
+            var socketInfo = {
+                Date : new Date(currentDate),
+                BookId : {
+                    _id  : currentDate,
+                    Name : reqInfo.BookId.Name,
+                    Image : reqInfo.BookId.Image
+                },
+                UserId  : currentDate,
+                Message : "Your book has been returned successfully, Now you can able to oreder new book"
+            }
+            await SocketSendBookReceived(reqInfo.UserId.Email, socketInfo);
         }catch(err){
             return M.toast({html: "Unkown error occured" , classes:"red"});
         }
@@ -55,7 +68,7 @@ function Admin() {
                                     !val.Request_Success && (
                                     <a 
                                         className="btn-small orange set_as_receive"
-                                        onClick={ () => Mark_As_Received(val._id, i) }> 
+                                        onClick={ () => Mark_As_Received(val._id, i,val) }> 
                                         Set as Received 
                                     </a>
                                     )
@@ -65,8 +78,6 @@ function Admin() {
                                         <span className="green-text"> Book Returned </span>  :  <span className="orange-text"> Pending </span>  
                                     }
                                 </a>
-                                
-                                
                             </li>
                        ))
                    ) 

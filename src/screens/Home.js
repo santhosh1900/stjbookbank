@@ -84,7 +84,7 @@ function Home() {
                     <h4 style={{textAlign : "center"}}> { Books }  </h4>
                 </div>
                 :
-                (Books.length <=0) ?
+                (Books.length <= 0) ?
                 ( <Spinner /> )
                 :( <div>
                     <div className="row">

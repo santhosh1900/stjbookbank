@@ -2,11 +2,13 @@ import React , { useEffect ,useRef , useState} from 'react'
 import "./navbar.css";
 import * as $ from "jquery";
 import { useHistory, Link } from "react-router-dom";
-import M from "materialize-css";
+import * as M from "materialize-css";
 import { useSelector , useDispatch } from "react-redux";
 import cookies from "universal-cookie";
 import { LogoutUser } from "../store/action";
 import { RequestFunction } from "../store/action";
+import * as moment from "moment";
+
 
 function Navbar() {
     const slide__out                     = useRef(null);
@@ -17,13 +19,15 @@ function Navbar() {
 
     const dispatch                       = useDispatch();
 
-    const userdata                       = useSelector(state => state.auth.userData) || localStorage.getItem("userdata");
+    const userdata                       = useSelector(state => state.auth.userData);
 
     const [search , setSearch]           = useState("");
 
     const Categorys                      = ["All Books" , "Engineering" , "Computer Science" , "Comics" , "Novels"];
 
     const [category , setCategory]       = useState("Select Category");
+
+    const Notifications                 = useSelector(state => state.notification.Notifications);
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -44,6 +48,12 @@ function Navbar() {
     useEffect(() => {       
         materialInit();
     },[userdata]);
+
+    useEffect(() => {
+        if(Notifications.length > 0){
+            return M.toast({html: "You received a new Notification" , classes:"green"});
+        }
+    },[Notifications])
 
     const logoutUser = () => {
         localStorage.clear();
@@ -95,6 +105,15 @@ function Navbar() {
         catch(err){
             return M.toast({html: err , classes:"#c62828 red darken-3"}); 
         } 
+    }
+
+    const FechNotification = async () =>{
+        if(Notifications.length <=0){
+            await dispatch(RequestFunction("get","getnotifications"));
+        }return;
+    }
+    const dateNow = (date) => {
+        return moment(date).fromNow();
     }
 
     const Non_Admin_Navbar_Buttons = () => {
@@ -181,6 +200,7 @@ function Navbar() {
                                             <a 
                                                 className="dropdown-trigger" 
                                                 id="drop"
+                                                onClick={FechNotification}
                                                 href="dropdown1" 
                                                 data-target="dropdown1">
                                                     Notification
@@ -230,12 +250,23 @@ function Navbar() {
                         }
                     </ul>
 
-                    <ul id="dropdown1" className="dropdown-content">
-                        <li><a>one</a></li>
-                        <li className="divider"></li>
-                        <li><a>two</a></li>
-                        <li className="divider"></li>
-                        <li><a>three</a></li>
+                    <ul id="dropdown1" className="dropdown-content collection notification">
+                        {   Notifications.length <=0 ? 
+                            <li className="collection-item">
+                                <div className="card no_Notidy"> 
+                                    <span>No notification found</span>
+                                </div>
+                            </li>
+                            :
+                            (Notifications.map((val,i) =>(
+                                <li className="collection-item avatar" key={i}>
+                                    <img src={val.BookId.Image} alt="" className="circle" />
+                                    <span className="title indigo-text">{val.BookId.Name}</span>
+                                    <p> { val.Message }   </p>
+                                    <p className="right-align mr-0"> {dateNow(val.Date)} </p>
+                                </li>
+                            )))
+                        }
                     </ul>
 
 

@@ -2,7 +2,7 @@ import React,{ useState ,useEffect} from "react";
 import "./login.css";
 import { Link , useHistory } from "react-router-dom";
 import {AddUser} from "../store/action";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import * as M from "materialize-css";
 
 function Login() {

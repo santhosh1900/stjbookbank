@@ -23,3 +23,30 @@
 .profile .modal-footer .close-btn{
     float: left;
 }
+
+.profile table{
+    width: 70%;
+}
+.profile table tbody tr{
+    border: none !important;
+}
+.profile table tbody tr td{
+    padding: .2rem 0;
+}
+
+.profile tr td:nth-child(1){
+    width: 10rem;
+}
+
+.profile tr td:nth-child(2){
+    width: 1rem;
+}
+
+@media (max-width:750px){
+    .profile table{
+        width: 100%;
+    } 
+    .profile table tbody tr td{
+        padding: .5rem 0;
+    }
+}

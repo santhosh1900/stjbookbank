@@ -1,8 +1,13 @@
 import { apiCall} from "../service/api";
 import cookies from 'universal-cookie';
+import {SocketSendBookReceived, socketConnection} from "./Socket";
+
 const Cookie = new cookies();
-const url  = "https://stjbookbankbackend.herokuapp.com";
-// const url = "http://localhost:3001";
+// const url  = "https://stjbookbankbackend.herokuapp.com";
+const url = "http://localhost:3001";
+
+
+
 
 
 //========== auth ====================
@@ -23,14 +28,29 @@ export const ADD_RETURN_REQUESTED        = "ADD_RETURN_REQUESTED";
 export const UPDATE_ONE_RETURN_REQUEST   = "UPDATE_ONE_RETURN_REQUEST";
 
 
+// ==============================sockets==========================
+export const SOCKET_INITILIZE               = "SOCKET_INITILIZE";
 
+
+// ================================== notification ==================
+export const ADD_NOTIFICATION         = "ADD_NOTIFICATION";
+export const ADD_SOCKET_NOTIFICATION  = "ADD_SOCKET_NOTIFICATION";
 
 
 export function setCurrentUser(user) {
-    return dispatch => {
-      dispatch({type: LOGIN_USER, user});
+    return async dispatch => {
+      await dispatch({ type: LOGIN_USER, user  });
+      await dispatch({ type : SOCKET_INITILIZE });
     };
+};
+
+
+export function AddNotification(data){
+  return async dispatch => {
+    await dispatch({ type : ADD_SOCKET_NOTIFICATION , data});
+  }
 }
+
 
 export function LogoutUser(){
   return dispatch => {
@@ -48,6 +68,7 @@ export function AddUser(type, userData) {
         localStorage.setItem("token", token);
         Cookie.set("token", token , {path : "/"});
         localStorage.setItem('userdata', JSON.stringify(token_user));
+        await socketConnection (JSON.stringify(token_user));
         return dispatch(setCurrentUser(token_user));
       }catch(err){
         throw(err);
@@ -64,7 +85,6 @@ export function RequestFunction (method , type , data="") {
       }else{
         responseData = await apiCall(method , `${url}/${type}`, { data });
       }  
-      // console.log(responseData)
       if(responseData["action2"]){
         dispatch({
           type      : responseData["action2"],
@@ -76,12 +96,13 @@ export function RequestFunction (method , type , data="") {
         if(responseData["message"]){
           throw(responseData["message"])
         }; 
-      }    
+      }  
       return dispatch({ 
         type      : responseData["action"],
         data      : responseData["data"]
       });
     }catch(err){
+      console.log(err);
       throw(err);
     }
   }

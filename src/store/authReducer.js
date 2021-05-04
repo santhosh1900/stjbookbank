@@ -1,9 +1,10 @@
-import { LOGIN_USER , LOGOUT_USER , ADD_ADDRESS , ADD_PURCHASE_HISTORY } from "./action";
+import { LOGIN_USER , LOGOUT_USER , ADD_ADDRESS , ADD_PURCHASE_HISTORY, SOCKET_INITILIZE } from "./action";
 
 const initialState = {
     userData        : null,
     address         : null,
-    PurchaseHistory : []
+    PurchaseHistory : [],
+    Socket          : false
 };
 
 export default (state = initialState , action) => {
@@ -11,7 +12,7 @@ export default (state = initialState , action) => {
         case LOGIN_USER : 
             return {
                 ...state,
-                userData        : action.user,
+                userData   : action.user,
             }
         case LOGOUT_USER :
             return {
@@ -30,6 +31,11 @@ export default (state = initialState , action) => {
             return{
                 ...state,
                 PurchaseHistory : action.data.PurchaseHistory
+            }
+        case SOCKET_INITILIZE :
+            return{
+                ...state,
+                Socket : true
             }
         default : 
             return state;
