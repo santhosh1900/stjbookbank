@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 import { AddNotification } from "./action";
-const url  = "https://stjbookbankbackend.herokuapp.com";
-// const url = "http://localhost:3001";
+// const url  = "https://stjbookbankbackend.herokuapp.com";
+const url = "http://localhost:3001";
 
 
 var Socket;
@@ -15,14 +15,14 @@ export const socketConnection = async (userdata, dispatch) => {
         room : userdata.Email
     });
     await Socket.on("Booksubmitted", async (data)=> {
+      if(typeof dispatch === 'function'){
         await(dispatch(AddNotification(data)));
-        console.log(data)
+      } 
     });
     console.log("initlized socket");
 };
 
 export const SocketSendBookReceived = async(email, data) => {
-    console.log(email);
     try{
       await Socket.emit("SendBookReceived",{
         room : email,

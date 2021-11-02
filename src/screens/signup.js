@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from 'react';
 import "./login.css";
-import { Link , useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as authAction from "../store/action";
 import { useDispatch} from "react-redux";
 import M from "materialize-css";
@@ -47,7 +47,7 @@ function Signup() {
     return (
         <div className="mycard">
             <div className="card auth-card input-field">
-                <h4 className="H">STJ Book Bank Signup</h4>
+                <h4 className="H">STJ Book Bank Create User</h4>
                 <form onSubmit={signup}>
                     <input
                     type="email"
@@ -90,9 +90,7 @@ function Signup() {
                     className="btn waves-effect waves-light #645bf6 blue darken-1"
                     disabled={disableButton || password !== confirmPassword}
                     >Signup</button>
-                </form>
-
-                <h5><Link to="/login">Have an account?</Link></h5>                 
+                </form>               
             </div>
         </div>
     )

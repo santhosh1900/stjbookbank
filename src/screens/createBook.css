@@ -1,0 +1,17 @@
+.createBook{
+    margin-top: 6rem;
+}
+.createBook .heading{
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+.createBook .btn-holder{
+    display: flex;
+    justify-content: center;
+}
+.p-0{
+    padding: 0 !important;
+}
+.l-0{
+    left: 0 !important;
+}
