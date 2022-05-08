@@ -1,0 +1,29 @@
+.managebooks{
+    margin-top: 7rem;
+}
+.managebooks .p-1{
+    padding: 1rem;
+}
+.managebooks #modal2 img{
+    width: 100%;
+    height: 100%;
+}
+.managebooks .modal{
+    width: 75%;
+}
+.managebooks .modal-footer .left-align{
+    float: left;
+}
+.managebooks .trendingBook{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.managebooks .trendingBook .card-temp{
+    max-width: 50%;
+}
+@media only screen and (min-width: 800px){
+    .managebooks .trendingBook .card-temp{
+        max-width: 30%;
+    }
+}

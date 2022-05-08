@@ -62,7 +62,7 @@ function Login() {
                     >Login</button>
                 </form>
                 
-                <h5><Link to="/signup">Dont have an account?</Link></h5>                 
+                {/* <h5><Link to="/signup">Dont have an account?</Link></h5>                  */}
             </div>
         </div>
     )

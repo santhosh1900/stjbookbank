@@ -29,6 +29,7 @@ function Home() {
                 setTimeout(async () => {
                     try{
                         await dispatch(RequestFunction("get","getAllBooks"));
+                        console.log(Books);
                     }catch(err){
                         return M.toast({html: err , classes:"#c62828 red darken-3"});
                     } 
@@ -43,7 +44,6 @@ function Home() {
             return M.toast({html: err , classes:"#c62828 red darken-3"});
         }
     },[]);
-
 
     const openModal = (val) => {
         setModalItem(val);

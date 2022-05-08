@@ -1,0 +1,20 @@
+.userList{
+    margin-top: 5rem;
+}
+.userList .collection{
+    width: 90%;
+    margin: auto;
+}
+.userList .p-1{
+    padding: 1rem;
+}
+.userList .userbookhistoryimage{
+    width: 50px !important;
+    height: 50px !important;
+    top: 50px !important;
+}
+.userList .userbookhistory .title{
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: .7rem 0;
+}

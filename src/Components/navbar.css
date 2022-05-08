@@ -82,35 +82,43 @@ nav{
     margin-top: .5rem;
 }
 
-.navbar .notification{
+#Navbar .w-350{
     width: 350px !important;
+}
+#Navbar #dropdown2{
+    width: 100% !important;
+    min-width: 100% !important;
+}
+
+#Navbar .notification{
     height: 300px !important;
     min-height: 300px;
     max-height: 500px;
     overflow: scroll;
 }
 
+
 /* Hide scrollbar for Chrome, Safari and Opera */
-.navbar .notification::-webkit-scrollbar {
-    display: none;
+#Navbar .notification::-webkit-scrollbar{
+    display: none !important;
 }
   
   /* Hide scrollbar for IE, Edge and Firefox */
-.navbar .notification{
--ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;  /* Firefox */
+#Navbar .notification{
+-ms-overflow-style: none !important;  /* IE and Edge */
+scrollbar-width: none !important;  /* Firefox */
 }
 
 
-.navbar .notification .circle{
+#Navbar .notification .circle{
     top: 1.5rem;
 }
-.navbar .notification .title{
+#Navbar .notification .title{
     padding: 0;
     font-size: .9rem;
 }
 
-.navbar .notification .no_Notidy{
+#Navbar .notification .no_Notidy{
     padding: 2rem;
     text-align: center;
     font-size: 1.5rem;

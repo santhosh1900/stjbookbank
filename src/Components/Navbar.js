@@ -11,24 +11,15 @@ import * as moment from "moment";
 
 
 function Navbar() {
-    const slide__out                     = useRef(null);
-
-    const history                        = useHistory();
-
-    const Cookie                         = new cookies;
-
-    const dispatch                       = useDispatch();
-
-    const userdata                       = useSelector(state => state.auth.userData);
-
-    const [search , setSearch]           = useState("");
-
-    const Categorys                      = ["All Books" , "Engineering" , "Computer Science" , "Comics" , "Novels"];
-
-    const [category , setCategory]       = useState("Select Category");
-
-    const Notifications                 = useSelector(state => state.notification.Notifications);
-
+    const slide__out                        = useRef(null);
+    const history                           = useHistory();
+    const Cookie                            = new cookies;
+    const dispatch                          = useDispatch();
+    const userdata                          = useSelector(state => state.auth.userData);
+    const [search , setSearch]              = useState("");
+    const Categorys                         = ["All Books" , "Engineering" , "Computer Science" , "Comics" , "Novels"];
+    const [category , setCategory]          = useState("Select Category");
+    const Notifications                     = useSelector(state => state.notification.Notifications);
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const ScrollFunction = () =>{
@@ -78,8 +69,7 @@ function Navbar() {
             history.push("/");
         }catch(err){
             return M.toast({html: err , classes:"#c62828 red darken-3"}); 
-        }
-        
+        } 
     }
 
     const materialInit = () => {
@@ -144,6 +134,7 @@ function Navbar() {
                     <a 
                         className="dropdown-trigger options" 
                         href="dropdown2" 
+                        onClick={FechNotification}
                         data-target="dropdown2">
                             Notification
                         <i className="material-icons right">arrow_drop_down</i>
@@ -163,12 +154,17 @@ function Navbar() {
                 <li key="6"><div className="divider"></div></li>
             ]
         }else{
-            return [];
+            return [
+                <li key="1"><Link to="/createbook"> Create Book </Link></li>,
+                <li key="2"><Link to="/managebooks"> Manage Books </Link></li>,
+                <li key="3"><Link to="/signup"> Create User </Link></li>,
+                <li key="4"><Link to="/userlist"> Students List </Link></li>,
+            ];
         }
     }
 
     return (
-        <div>
+        <div id="Navbar">
             { userdata && (
                 <div>
                     <nav className="animate__animated navbar">
@@ -195,8 +191,8 @@ function Navbar() {
                             <ul className="right hide-on-med-and-down">
                                 <li><Link to = {`/profile`}>{ userdata.Username }</Link></li>
                                 {
-                                    !userdata.IsAdmin && (
-                                        <li>
+                                    !userdata.IsAdmin && ([
+                                        <li key={"1-nav"}>
                                             <a 
                                                 className="dropdown-trigger" 
                                                 id="drop"
@@ -206,12 +202,8 @@ function Navbar() {
                                                     Notification
                                                 <i className="material-icons right">arrow_drop_down</i>
                                             </a>
-                                        </li>
-                                    )
-                                }
-                                {
-                                    !userdata.IsAdmin && (
-                                        <li>
+                                        </li>,
+                                        <li key={"2-nav"}>
                                             <a 
                                                 className="dropdown-trigger" 
                                                 id="drop"
@@ -221,7 +213,15 @@ function Navbar() {
                                                 <i className="material-icons right">arrow_drop_down</i>
                                             </a>
                                         </li>
-                                    )
+                                    ])
+                                }
+                                {
+                                    userdata.IsAdmin && ( [
+                                    <li key="1"><Link to="/createbook"> Create Book </Link></li>,
+                                    <li key="2"><Link to="/managebooks"> Manage Books </Link></li>,
+                                    <li key="3"><Link to="/signup"> Create User </Link></li>,
+                                    <li key="4"><Link to="/userlist"> Students List </Link></li>,
+                                    ])
                                 }
                                 <li><a onClick={logoutUser}> Logout </a></li>
                             </ul>
@@ -250,8 +250,8 @@ function Navbar() {
                         }
                     </ul>
 
-                    <ul id="dropdown1" className="dropdown-content collection notification">
-                        {   Notifications.length <=0 ? 
+                    <ul id="dropdown1" className="dropdown-content collection notification w-350">
+                        {Notifications.length <=0 ? 
                             <li className="collection-item">
                                 <div className="card no_Notidy"> 
                                     <span>No notification found</span>
@@ -269,15 +269,24 @@ function Navbar() {
                         }
                     </ul>
 
-
-                    <ul id="dropdown2" className="dropdown-content">
-                        <li><a>one</a></li>
-                        <li className="divider"></li>
-                        <li><a>two</a></li>
-                        <li className="divider"></li>
-                        <li><a>three</a></li>
+                    <ul id="dropdown2" className="dropdown-content collection notification">
+                        {Notifications.length <=0 ? 
+                            <li className="collection-item">
+                                <div className="card no_Notidy"> 
+                                    <span>No notification found</span>
+                                </div>
+                            </li>
+                            :
+                            (Notifications.map((val,i) =>(
+                                <li className="collection-item avatar" key={i}>
+                                    <img src={val.BookId.Image} alt="" className="circle" />
+                                    <span className="title indigo-text">{val.BookId.Name}</span>
+                                    <p> { val.Message }   </p>
+                                    <p className="right-align mr-0"> {dateNow(val.Date)} </p>
+                                </li>
+                            )))
+                        }
                     </ul>
-
 
                     <ul id="slide-out" className="sidenav" ref={slide__out}>
                         <li>
@@ -292,7 +301,6 @@ function Navbar() {
                         </li>
 
                         { Non_Admin_Navbar_Buttons() }
-                        
                         <li> <a className='options' onClick={logoutUser}>  Logout </a> </li>
                     </ul>
                 </div> )
