@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 import { AddNotification } from "./action";
-const url  = "https://stjbookbankbackend.herokuapp.com";
+const url  = "https://bookbankbackend.netlify.app/.netlify/functions/api";
 // const url = "http://localhost:3001";
 
 

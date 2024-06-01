@@ -25,7 +25,7 @@ function Home() {
             if(UserData && UserData.IsAdmin){
                 await history.push("/admin");
             }
-            if(Books.length <= 0){
+            if(UserData && Books?.length <= 0){
                 setTimeout(async () => {
                     try{
                         await dispatch(RequestFunction("get","getAllBooks"));
@@ -43,7 +43,7 @@ function Home() {
         catch(err){
             return M.toast({html: err , classes:"#c62828 red darken-3"});
         }
-    },[]);
+    },[UserData]);
 
     const openModal = (val) => {
         setModalItem(val);

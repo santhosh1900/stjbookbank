@@ -49,7 +49,7 @@ const Routing = () => {
   },[]);
 
   const adminScreens = () => {
-    if(user && user.IsAdmin){
+    if(user && user?.IsAdmin){
       return [
       <Route key="1" path="/admin">
         <Admin />
