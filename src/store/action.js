@@ -3,7 +3,7 @@ import cookies from 'universal-cookie';
 import {SocketSendBookReceived, socketConnection} from "./Socket";
 
 const Cookie = new cookies();
-const url  = "https://bookbankbackend.netlify.app/.netlify/functions";
+const url  = "https://bookbankbackend.netlify.app/.netlify/functions/api";
 // const url = "http://localhost:3001";
 
 
